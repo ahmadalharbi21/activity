@@ -2,6 +2,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import joblib
 import pandas as pd
+import os
+import uvicorn
 
 app = FastAPI()
 
@@ -19,7 +21,6 @@ def rename_clusters(cluster_id):
 class InputFeatures(BaseModel):
     run_length: int
     ongoing: str
-    content_rating: str
     imdb_rating: float
     total_ratings: int
 
@@ -28,7 +29,6 @@ def predict(input_features: InputFeatures):
     test_data = pd.DataFrame({
         'run_length': [input_features.run_length],
         'ongoing': [1 if input_features.ongoing.lower() == "yes" else 0],
-        'Content Rating': [input_features.content_rating],
         'IMDb Rating': [input_features.imdb_rating],
         'Total Ratings': [input_features.total_ratings]
     })
