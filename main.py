@@ -40,3 +40,7 @@ def predict(input_features: InputFeatures):
         return {"predicted_category": predicted_label}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Prediction failed: {str(e)}")
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))  # Use Render's assigned port or default to 8000
+    uvicorn.run(app, host="0.0.0.0", port=port)
